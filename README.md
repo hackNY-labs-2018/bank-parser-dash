@@ -17,4 +17,5 @@ Other:
 
 Running:
 
-    python app.py
+    python app.py   # simple 'hello world' app
+    python multi.py # multiple input, multiple output, interactive example
