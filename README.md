@@ -17,5 +17,6 @@ Other:
 
 Running:
 
+    conda env [name-of-env] # switch to conda env
     python app.py   # simple 'hello world' app
     python multi.py # multiple input, multiple output, interactive example
