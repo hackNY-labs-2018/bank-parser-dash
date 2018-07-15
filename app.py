@@ -15,6 +15,8 @@ app = dash.Dash()
 df = pd.read_csv('./data/hello.csv')
 
 # generates a table (reusable component)
+
+
 def generate_table(dataframe, max_rows=10):
     return html.Table(
         # Header
@@ -25,6 +27,7 @@ def generate_table(dataframe, max_rows=10):
             html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
         ]) for i in range(min(len(dataframe), max_rows))]
     )
+
 
 # defines front-end layout
 app.layout = html.Div(children=[
@@ -43,7 +46,8 @@ app.layout = html.Div(children=[
         figure={
             'data': [
                 {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-                {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
+                {'x': [1, 2, 3], 'y': [2, 4, 5],
+                    'type': 'bar', 'name': u'Montréal'},
             ],
             'layout': {
                 'title': 'Dash Data Visualization'

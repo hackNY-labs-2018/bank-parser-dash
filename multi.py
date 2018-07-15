@@ -5,7 +5,7 @@ and https://medium.com/@plotlygraphs/introducing-dash-5ecf7191b503
 
 import dash
 from dash.dependencies import Output as output
-from  dash.dependencies import Input as input
+from dash.dependencies import Input as input
 import dash_core_components as core
 import dash_html_components as html
 import plotly.graph_objs as go
@@ -27,7 +27,8 @@ app.layout = html.Div([
         html.Div([
             core.Dropdown(
                 id='crossfilter-xaxis-column',
-                options=[{'label': i, 'value': i} for i in available_indicators],
+                options=[{'label': i, 'value': i}
+                         for i in available_indicators],
                 value='Fertility rate, total (births per woman)'
             ),
             core.RadioItems(
@@ -37,12 +38,13 @@ app.layout = html.Div([
                 labelStyle={'display': 'inline-block'}
             )
         ],
-        style={'width': '49%', 'display': 'inline-block'}),
+            style={'width': '49%', 'display': 'inline-block'}),
 
         html.Div([
             core.Dropdown(
                 id='crossfilter-yaxis-column',
-                options=[{'label': i, 'value': i} for i in available_indicators],
+                options=[{'label': i, 'value': i}
+                         for i in available_indicators],
                 value='Life expectancy at birth, total (years)'
             ),
             core.RadioItems(
@@ -79,6 +81,7 @@ app.layout = html.Div([
     ), style={'width': '49%', 'padding': '0px 20px 20px 20px'})
 ])
 
+
 @app.callback(
     output('crossfilter-indicator-scatter', 'figure'),
     [input('crossfilter-xaxis-column', 'value'),
@@ -95,8 +98,10 @@ def update_graph(xaxis_column_name, yaxis_column_name,
         'data': [go.Scatter(
             x=dff[dff['Indicator Name'] == xaxis_column_name]['Value'],
             y=dff[dff['Indicator Name'] == yaxis_column_name]['Value'],
-            text=dff[dff['Indicator Name'] == yaxis_column_name]['Country Name'],
-            customdata=dff[dff['Indicator Name'] == yaxis_column_name]['Country Name'],
+            text=dff[dff['Indicator Name'] ==
+                     yaxis_column_name]['Country Name'],
+            customdata=dff[dff['Indicator Name'] ==
+                           yaxis_column_name]['Country Name'],
             mode='markers',
             marker={
                 'size': 15,
@@ -119,6 +124,7 @@ def update_graph(xaxis_column_name, yaxis_column_name,
         )
     }
 
+
 def create_time_series(dff, axis_type, title):
     return {
         'data': [go.Scatter(
@@ -140,6 +146,7 @@ def create_time_series(dff, axis_type, title):
         }
     }
 
+
 @app.callback(
     output('x-time-series', 'figure'),
     [input('crossfilter-indicator-scatter', 'hoverData'),
@@ -152,6 +159,7 @@ def update_y_timeseries(hoverData, xaxis_column_name, axis_type):
     title = '<b>{}</b><br>{}'.format(country_name, xaxis_column_name)
     return create_time_series(dff, axis_type, title)
 
+
 @app.callback(
     output('y-time-series', 'figure'),
     [input('crossfilter-indicator-scatter', 'hoverData'),
@@ -161,6 +169,7 @@ def update_x_timeseries(hoverData, yaxis_column_name, axis_type):
     dff = df[df['Country Name'] == hoverData['points'][0]['customdata']]
     dff = dff[dff['Indicator Name'] == yaxis_column_name]
     return create_time_series(dff, axis_type, yaxis_column_name)
+
 
 app.css.append_css({
     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
