@@ -12,7 +12,9 @@ import pandas as pd
 app = dash.Dash()
 
 # read from csv
-df = pd.read_csv('./data/hello.csv')
+df = pd.read_csv('./data/noah.csv')
+x = [pd.to_datetime(date, format='%m/%d') for date in df['transaction_date']]
+y = df['amount']
 
 # generates a table (reusable component)
 
@@ -31,29 +33,27 @@ def generate_table(dataframe, max_rows=10):
 
 # defines front-end layout
 app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
+    html.H1(children='Bank Parser Dashboard'),
 
     html.Div(children='''
-        Dash: A web application framework for Python.
+        For DANY by hackNY :)
     '''),
-
-    # table
-    generate_table(df),
 
     # graph
     dcc.Graph(
         id='example-graph',
         figure={
             'data': [
-                {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-                {'x': [1, 2, 3], 'y': [2, 4, 5],
-                    'type': 'bar', 'name': u'Montréal'},
+                {'x': x, 'y': y, 'type': 'bar', 'name': 'Transactions'}
             ],
             'layout': {
-                'title': 'Dash Data Visualization'
+                'title': 'Transactions'
             }
         }
-    )
+    ),
+
+    # table
+    generate_table(df)
 ])
 
 # starts app from command line, run Flask server
