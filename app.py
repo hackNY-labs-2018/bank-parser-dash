@@ -14,7 +14,7 @@ app = dash.Dash()
 # read from csv
 df = pd.read_csv('./data/noah.csv')
 x = [pd.to_datetime(date, format='%m/%d') for date in df['transaction_date']]
-y = df['amount']
+y = [abs(float(a)) for a in df['amount']]
 
 # generates a table (reusable component)
 
