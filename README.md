@@ -1,6 +1,17 @@
 # bank-parser-dash
 Try out dash for bank parser proj
 
+
+NOTES
+---
+- need to clean OCR data a LOT
+    - ensure all lines the same # of params
+    - sometimes amount + account_number is somehow one field, leading to *extremely* large amounts, which display badly
+    - had to manually edit CSV :(, difficult to automate??
+    - can just remove bad data...
+- pdf to text is much better
+
+
 Dev
 ---
 `/data` holds input csv data
