@@ -1,0 +1,6 @@
+FILENAME=$1
+docker run -v $(pwd)/$FILENAME:/$FILENAME \
+           -v $(pwd):/parser \
+	   -it \
+	   dany-bank-parser:latest \
+           python3 /parser/parsing/ocr_parser.py /$FILENAME

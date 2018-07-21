@@ -1,0 +1,6 @@
+echo "Checking to see whether Docker is installed.";
+if docker 2>/dev/null; then
+	docker build . -t dany-bank-parser
+else
+	echo "Docker is not installed. Please install Docker."
+fi
