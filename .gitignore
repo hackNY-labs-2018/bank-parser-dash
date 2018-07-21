@@ -3,6 +3,14 @@
 # all csvs (private data!)
 *.csv
 
+# Other file extensions
+*.pdf
+*.tiff
+*.png
+*.jpg
+*.jpeg
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -107,3 +115,40 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+###################
+# macOS Gitignore #
+###################
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+#######################
+# end macOS Gitignore #
+#######################
