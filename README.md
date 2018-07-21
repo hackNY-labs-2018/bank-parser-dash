@@ -1,6 +1,12 @@
 # bank-parser-dash
 Try out dash for bank parser proj
 
+PARSING WITH DOCKER
+-------------------
+- Assume that Docker is installed. 
+    - Run `./setup_pabst` to set up the docker container. Warning, this will take a while.
+    - Run `./pabst <FILENAME>` to run ocr parsing on a file. 
+
 
 NOTES
 ---
