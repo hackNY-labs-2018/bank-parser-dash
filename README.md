@@ -1,6 +1,8 @@
 # bank-parser-dash
 Try out dash for bank parser proj
 
+Pabst is named after the legendary American beer 'Pabst Blue Ribbon', because PBR = Parsing Bank Records
+
 PARSING WITH DOCKER
 -------------------
 - Assume that Docker is installed. 
