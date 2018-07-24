@@ -1,4 +1,4 @@
-# bank-parser-dash
+# Pabst
 Try out dash for bank parser proj
 
 Pabst is named after the legendary American beer 'Pabst Blue Ribbon', because PBR = Parsing Bank Records
