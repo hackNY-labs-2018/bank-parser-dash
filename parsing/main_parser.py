@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     print("Attempting text extraction.")
 
-    csv_data = text_parser.extract_to_csv(FILENAME)
+    csv_data = exp_text_parser.extract_to_csv(FILENAME)
 
     if len(csv_data) == 0:
         print("Text extraction failed; attempting OCR parsing.")
