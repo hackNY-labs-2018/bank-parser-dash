@@ -64,7 +64,7 @@ def extract_text_if_valid(filename):
     return extract_transactions(pdf)
 
 def extract_to_csv(filename):
-    """Parses text from a pdf and returns a csv it to a csv
+    """Parses text from a pdf and returns a csv
     file if valid. Returns True if operation succeeded,
     False otherwise.
     """
