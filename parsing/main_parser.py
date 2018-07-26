@@ -12,11 +12,13 @@ import os
 # Custom Modules
 import ocr_parser
 import text_parser
+import exp_text_parser
 
 csv_headers = ','.join(["transaction_date","posting_date","description","location","reference_number","account_number","amount","\n"])
 
 def write_to_csv(csv_data, pdf_filename):
-    output_filename = './data' + os.path.splitext(pdf_filename)[0] + '.csv'
+    out_dir = os.path.join(os.getcwd(), '..', 'data')
+    output_filename = os.path.join(out_dir, os.path.splitext(pdf_filename)[0] + '.csv')
     print("Writing CSV to", output_filename)
     try:
         file = open(output_filename, 'w')
