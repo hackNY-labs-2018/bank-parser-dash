@@ -3,6 +3,8 @@
 of entry for OCR parsing
 """
 
+DEBUG = False
+
 # Built-in modules
 import sys
 import base64
@@ -26,7 +28,8 @@ def parse_images(images):
     contents = []
     count = 1
     for i in images:
-        print('Running OCR on image {0}'.format(count))
+        if DEBUG:
+            print('Running OCR on image {0}'.format(count))
         content = pytesseract.image_to_boxes(i)
         content = content.split('\n')
         structured = []
@@ -46,7 +49,8 @@ def parse_images(images):
 def parse(file_name):
     pil_pages = []
     if file_name[len(file_name)-4:len(file_name)] == '.pdf':
-        print("This is a PDF... Running ImageMagick conversion.")
+        if DEBUG:
+            print("This is a PDF... Running ImageMagick conversion.")
         with WandImage(filename=file_name, resolution=300) as pdf:
             for page_count, page in enumerate(pdf.sequence):
                 page_image = WandImage(image=page)
@@ -58,7 +62,8 @@ def parse(file_name):
         pil_pages = [Image.open(file_name)]
     csv_data = parse_images(pil_pages)
     print(csv_data)
-    print('Done. Cheers!')
+    if DEBUG:
+        print('Done. Cheers!')
     return csv_data
 
 if __name__ == '__main__':
@@ -66,6 +71,7 @@ if __name__ == '__main__':
     try:
         file_name = sys.argv[1]
     except:
-        print('Sorry buddy, but you need to provide a filename.')
+        if DEBUG:
+            print('Sorry buddy, but you need to provide a filename.')
         sys.exit()
     parse(file_name)

@@ -5,8 +5,15 @@
 from operator import attrgetter
 import csv
 from operator import attrgetter
+from line_parser import special_data_from_raw_line
 import io
-DEBUG = True
+DEBUG = False
+
+
+# Load up configurations
+import json
+config_file = open('record_config.json')
+config = json.loads(config_file.read())
 
 
 def parse_tesseract(ocr_list):
@@ -24,21 +31,24 @@ def parse_tesseract(ocr_list):
     for i in all_lines:
         text = i['contents']
         try:
-            line_to_write = data_from_raw_line(text)
+            #line_to_write = data_from_raw_line(text)
+            line_to_write = special_data_from_raw_line(text, config['Bank of America'])
             transaction_line = False
             try:
                 line_to_write['transaction_date']
                 transaction_line = True
             except:
-                int(line_to_write('description'))
+                int(line_to_write['description'])
                 transaction_line = True
             if transaction_line:
                 json_data += [line_to_write]
         except Exception as e:
-            print('Text:', text)
-            print('Exception:', e)
-            print('Standard exception but you might want to checkout why it failed and remove this print statement eventually')
-    print('Generating CSV')
+            if DEBUG:
+                print('Text:', text)
+                print('Exception:', e)
+                print('Standard exception but you might want to checkout why it failed and remove this print statement eventually')
+    if DEBUG:
+        print('Generating CSV')
     raw_csv = data_to_csv(json_data)
     return raw_csv
 
@@ -67,7 +77,8 @@ def data_from_raw_line(line):
     count = 0
     x_span = line[len(line)-1]['x'] - line[0]['x']
     multiplier = x_span / 1105.0 # This is the x_span the algorithm was trained on
-    print('X Span:', x_span)
+    if DEBUG:
+        print('X Span:', x_span)
     for i in line:
         if i['contents'] == '‘': # Common Tesseract misinterpretation
             i['contents'] = 'I'
