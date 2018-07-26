@@ -1,4 +1,6 @@
-"""Text Parser parses text directly from a PDF using the "pdfquery" library
+""" EXPERIMENTAL Text Parser parses text directly from a PDF using the "pdfquery" library
+- WARNING: Does some crazy assumptions in attempt to correct comma placement
+- Trades generalizability for accuracy in niche case
 """
 
 import os
@@ -6,6 +8,9 @@ import re
 import sys
 
 import pdfquery
+
+LOC_INDEX = 3 # location(state) starts on 4th column, so zero-index = 3
+NORM_LENGTH = 8 # set norm
 
 def extract_transactions(pdf):
     """Extracts a list of all transactions in CSV format from a PDF
@@ -30,6 +35,13 @@ def extract_transactions(pdf):
             ])['transactions']
         while len(t) == 6:
             t = ','.join([process_text_cell(cell) for cell in t])
+            # post process normalization
+            arr = t.split(',')
+            if len(arr) > NORM_LENGTH:
+                li = LOC_INDEX
+                arr[li-1:li+1] = [' '.join(arr[li-1:li+1])]
+            t = ','.join(arr)
+            # continue...
             transactions.append(t)
             y -= line_height
             t = pdf.extract([
