@@ -47,11 +47,12 @@ def process_text_cell(cell):
     # replaces regex matches with comma delineation, also strips whitespace from both ends
     return re.sub(regex, ",", cell.text.strip())
 
-def text_parse(filename):
-    """Parses text from a pdf
+def extract_text_if_valid(filename):
+    """Parses text from a pdf if it is valid; otherwise,
+    returns an empty string.
     """
     if not filename.endswith('.pdf'):
-        print('Sorry, only PDF files are supported.')
+        print('Sorry, only PDF files are supported for text extraction.')
         return ""
     # prevent space normalization in order to separate different text blocks in each line
     pdf = pdfquery.PDFQuery(
@@ -59,7 +60,19 @@ def text_parse(filename):
         normalize_spaces=False,
         resort=False)
     pdf.load()
+
     return extract_transactions(pdf)
+
+def extract_to_csv(filename):
+    """Parses text from a pdf and returns a csv it to a csv
+    file if valid. Returns True if operation succeeded,
+    False otherwise.
+    """
+    csv_data = extract_text_if_valid(filename)
+    if len(csv_data) == 0:
+        print("Error: no bank data extracted from", filename)
+        return ""
+    return csv_data
 
 if __name__ == '__main__':
     # ensure filename is provided
@@ -67,12 +80,4 @@ if __name__ == '__main__':
         print("Need exactly one argument for filename.")
         sys.exit()
     FILENAME = sys.argv[1]
-    # execute
-    OUTPUT = text_parse(FILENAME)
-    print(OUTPUT)
-    print('Writing to csv...')
-    # write to csv
-    OUTPUT_FILENAME = os.path.splitext(FILENAME)[0] + '.csv'
-    with open(OUTPUT_FILENAME, 'w') as file:
-        file.write(OUTPUT)
-    print('Done, written to {0}'.format(OUTPUT_FILENAME))
+    print(extract_to_csv(FILENAME))
