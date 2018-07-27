@@ -4,11 +4,12 @@
     "fields": {
       "transaction_date": [72,145],
       "posting_date": [170,245],
-      "description": [255,790],
-      "location": [255,790],
       "reference_number": [815,940],
       "account_number": [950,1055],
       "amount": [1060,1250]
-    }
+    },
+    "overlapping": [
+      {"fields": [ "description", "location" ], "bounding": [255, 790]}
+    ]
   }
 }
