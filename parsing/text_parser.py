@@ -75,6 +75,7 @@ def extract_to_csv(filename):
     return csv_data
 
 if __name__ == '__main__':
+    print('Run main_parser.py instead.')
     # ensure filename is provided
     if len(sys.argv) != 2:
         print("Need exactly one argument for filename.")

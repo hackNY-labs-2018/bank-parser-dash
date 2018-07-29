@@ -80,7 +80,7 @@ def normalize_length(transactions):
             break # max one match
         while len(arr) < NORM_LENGTH:
             # last resort: pad
-            arr.insert(li+1, '')
+            arr.insert(li, '')
         transactions[index] = ','.join(arr)
 
 def process_text_cell(cell):
@@ -119,6 +119,7 @@ def extract_to_csv(filename):
     return csv_data
 
 if __name__ == '__main__':
+    print('Run main_parser.py instead.')
     # ensure filename is provided
     if len(sys.argv) != 2:
         print("Need exactly one argument for filename.")

@@ -25,8 +25,9 @@ def write_to_csv(csv_data, pdf_filename):
         file.write(csv_headers)
         file.write(csv_data)
         print('Done extracting text, written to {0}'.format(output_filename))
-    except:
+    except IOError as e:
         print("Error: unable to write CSV to", output_filename)
+        print(e)
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
