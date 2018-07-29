@@ -17,10 +17,6 @@ import pandas as pd
 # initialize dash app
 app = dash.Dash()
 
-# read from csv
-df = pd.read_csv('./data/noah.csv')
-x = [pd.to_datetime(date, format='%m/%d') for date in df['transaction_date']]
-y = [abs(float(a)) for a in df['amount']]
 
 # generates a table (reusable component)
 
@@ -67,27 +63,11 @@ app.layout = html.Div(children=[
         For DANY by hackNY :)
     '''),
 
-    # graph
-    dcc.Graph(
-        id='example-graph',
-        figure={
-            'data': [
-                {'x': x, 'y': y, 'type': 'bar', 'name': 'Transactions'}
-            ],
-            'layout': {
-                'title': 'Transactions'
-            }
-        }
-    ),
-
-    # table
-    generate_table(df)
 ])
 
 
-def parse_contents(contents, filename, date, df):
+def parse_contents(contents, filename, date):
     content_type, content_string = contents.split(',')
-
     decoded = base64.b64decode(content_string)
     try:
         if 'csv' in filename:
@@ -103,10 +83,28 @@ def parse_contents(contents, filename, date, df):
             'There was an error processing this file.'
         ])
 
+    x = [pd.to_datetime(date, format='%m/%d') for date in df['transaction_date']]
+    y = [abs(float(a)) for a in df['amount']]
+
     return html.Div([
         html.H5(filename),
         html.H6(datetime.datetime.fromtimestamp(date)),
 
+        # graph
+        dcc.Graph(
+            id='example-graph',
+            figure={
+                'data': [
+                    {'x': x, 'y': y, 'type': 'bar', 'name': 'Transactions'}
+                ],
+                'layout': {
+                    'title': 'Transactions'
+                }
+            }
+        ),
+
+        # table
+        #generate_table(df)
         # Use the DataTable prototype component:
         # github.com/plotly/dash-table-experiments
         dt.DataTable(rows=df.to_dict('records')),
