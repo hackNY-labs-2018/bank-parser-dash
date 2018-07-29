@@ -77,6 +77,8 @@ def parse_contents(contents, filename, date):
         elif 'xls' in filename:
             # Assume that the user uploaded an excel file
             df = pd.read_excel(io.BytesIO(decoded))
+        else:
+            return html.Div('Something went wrong. Make sure the file type is .csv or .xls')
     except Exception as e:
         print(e)
         return html.Div([
@@ -126,11 +128,15 @@ def parse_contents(contents, filename, date):
                Input('upload-data', 'last_modified')])
 def update_output(list_of_contents, list_of_names, list_of_dates):
     if list_of_contents is not None:
-        children = [
-            parse_contents(c, n, d) for c, n, d in
-            zip(list_of_contents, list_of_names, list_of_dates)]
-        return children
-
+        try:
+            children = [
+                parse_contents(c, n, d) for c, n, d in
+                zip(list_of_contents, list_of_names, list_of_dates)]
+            return children
+        except Exception as e:
+            return html.Div([
+                'Something went wrong :( Please try again.'
+                ])
 # starts app from command line, run Flask server
 if __name__ == '__main__':
     app.run_server(debug=True)
