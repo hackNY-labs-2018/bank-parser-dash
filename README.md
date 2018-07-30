@@ -12,13 +12,8 @@ PARSING WITH DOCKER
 
 NOTES
 ---
-- need to clean OCR data a LOT
-    - ensure all lines the same # of params
-    - sometimes amount + account_number is somehow one field, leading to *extremely* large amounts, which display badly
-    - had to manually edit CSV :(, difficult to automate??
-    - can just remove bad data...
-- pdf to text is much better
-
+- pdf to text(`exp_text_parser.py`) is currently better than ocr, used as default by `main_parser.py`
+- Put all pdf files inside the `./parsing` directory to convert to csv. The csv files are output in `./data`
 
 Dev
 ---
@@ -31,11 +26,11 @@ For Windows, first install [miniconda](https://conda.io/miniconda.html) (follow 
     conda install -c conda-forge pandas dash dash-html-components dash-core-components
 
 Other:
+
     pip install -r requirements.txt
     pip install pandas
 
 Running:
 
-    conda env [name-of-env] # switch to conda env
-    python app.py   # simple 'hello world' app
-    python multi.py # multiple input, multiple output, interactive example
+    activate [name-of-env] # switch to conda env
+    python app.py   # Full main app
