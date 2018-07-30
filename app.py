@@ -105,7 +105,10 @@ def parse_contents(contents, filename, date):
         #generate_table(df)
         # Use the DataTable prototype component:
         # github.com/plotly/dash-table-experiments
-        dt.DataTable(rows=df.to_dict('records')),
+        dt.DataTable(rows=df.to_dict('records'),
+        row_selectable=True,
+        filterable=True,
+        sortable=True),
 
         html.Hr(),  # horizontal line
 
