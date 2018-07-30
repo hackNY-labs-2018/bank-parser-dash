@@ -16,7 +16,7 @@ config_file = open('record_config.json')
 config = json.loads(config_file.read())
 
 
-def parse_tesseract(ocr_list):
+def parse_tesseract(ocr_list, width):
     """
     Takes in the results of pytesseract image_to_boxes and returns a list of transactions
     in a csv format (string)
@@ -32,14 +32,15 @@ def parse_tesseract(ocr_list):
         text = i['contents']
         try:
             #line_to_write = data_from_raw_line(text)
-            line_to_write = special_data_from_raw_line(text, config['Bank of America'])
+            line_to_write = special_data_from_raw_line(text, config['Bank of America'], width)
             transaction_line = False
             try:
                 line_to_write['transaction_date']
                 transaction_line = True
             except:
-                int(line_to_write['description'])
-                transaction_line = True
+                raise Exception('No transaction date so returning nothing')
+                #int(line_to_write['description'])
+                #transaction_line = True
             if transaction_line:
                 json_data += [line_to_write]
         except Exception as e:

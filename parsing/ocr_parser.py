@@ -27,6 +27,7 @@ def parse_images(images):
     """
     contents = []
     count = 1
+    width, height = images[0].size
     for i in images:
         if DEBUG:
             print('Running OCR on image {0}'.format(count))
@@ -43,7 +44,7 @@ def parse_images(images):
             }]
         contents += [structured]
         count += 1
-    parsed = parser.parse_tesseract(contents)
+    parsed = parser.parse_tesseract(contents, width)
     return parsed
 
 def parse(file_name):
