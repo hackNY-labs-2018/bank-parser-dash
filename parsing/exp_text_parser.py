@@ -82,6 +82,12 @@ def normalize_length(transactions):
             # last resort: pad
             arr.insert(li, '')
         transactions[index] = ','.join(arr)
+    
+    # compress loc, so 8-->7 columns
+    for ind, line in enumerate(transactions):
+        arr = line.split(',')
+        arr[li:li+2] = [' '.join(arr[li:li+2])]
+        transactions[ind] = ','.join(arr)
 
 def process_text_cell(cell):
     """Helper function to process each text cell extracted from a pdf
@@ -120,9 +126,11 @@ def extract_to_csv(filename):
 
 if __name__ == '__main__':
     print('Run main_parser.py instead.')
+    '''
     # ensure filename is provided
     if len(sys.argv) != 2:
         print("Need exactly one argument for filename.")
         sys.exit()
     FILENAME = sys.argv[1]
     print(extract_to_csv(FILENAME))
+    '''
