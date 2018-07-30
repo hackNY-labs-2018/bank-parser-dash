@@ -17,10 +17,7 @@ import pandas as pd
 # initialize dash app
 app = dash.Dash()
 
-
 # generates a table (reusable component)
-
-
 def generate_table(dataframe, max_rows=10):
     return html.Table(
         # Header
@@ -32,16 +29,15 @@ def generate_table(dataframe, max_rows=10):
         ]) for i in range(min(len(dataframe), max_rows))]
     )
 
-
 # defines front-end layout
 app.layout = html.Div(children=[
     html.H1(children='Bank Parser Dashboard'),
 
     dcc.Upload(
         id='upload-data',
-        children=html.Div([
+        children=html.Div(children=[
             'Drag and Drop or ',
-            html.A('Select Files')
+            html.A('Click to select file.')
         ]),
         style={
             'width': '100%',
@@ -78,11 +74,11 @@ def parse_contents(contents, filename, date):
             # Assume that the user uploaded an excel file
             df = pd.read_excel(io.BytesIO(decoded))
         else:
-            return html.Div('Something went wrong. Make sure the file type is .csv or .xls')
-    except Exception as e:
+            return html.Div('Make sure the file type is .csv or .xls')
+    except IOError as e:
         print(e)
         return html.Div([
-            'There was an error processing this file.'
+            'Error occured uploading file.'
         ])
 
     x = [pd.to_datetime(date, format='%m/%d') for date in df['transaction_date']]
@@ -127,16 +123,19 @@ def parse_contents(contents, filename, date):
                Input('upload-data', 'filename'),
                Input('upload-data', 'last_modified')])
 def update_output(list_of_contents, list_of_names, list_of_dates):
-    if list_of_contents is not None:
-        try:
-            children = [
-                parse_contents(c, n, d) for c, n, d in
-                zip(list_of_contents, list_of_names, list_of_dates)]
-            return children
-        except Exception as e:
-            return html.Div([
-                'Something went wrong :( Please try again.'
-                ])
+    if list_of_contents is None:
+        return html.Div([
+            'Parsed empty contents. This file may not be in a good bank statement format.'
+            ])
+    try:
+        children = [
+            parse_contents(c, n, d) for c, n, d in
+            zip(list_of_contents, list_of_names, list_of_dates)]
+        return children
+    except Exception as e:
+        return html.Div([
+            'Error occured while parsing contents.'
+            ])
 # starts app from command line, run Flask server
 if __name__ == '__main__':
     app.run_server(debug=True)
