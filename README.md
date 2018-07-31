@@ -19,7 +19,8 @@ Dev
 ---
 `/data` holds input csv data
 
-Install:
+Installing viz-only, without Docker
+---
 
 For Windows, first install [miniconda](https://conda.io/miniconda.html) (follow setup to create env also) and then install dash with conda:
 
@@ -34,3 +35,12 @@ Running:
 
     activate [name-of-env] # switch to conda env
     python app.py   # Full main app
+
+Installing OCR deps, without Docker
+---
+see that other repo..
+
+Installing via Docker
+---
+
+Hi Kevin, pls do this section :)
