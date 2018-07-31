@@ -1,6 +1,4 @@
 # Pabst
-Try out dash for bank parser proj
-
 Pabst is named after the legendary American beer 'Pabst Blue Ribbon', because PBR = Parsing Bank Records
 
 PARSING WITH DOCKER
@@ -12,6 +10,7 @@ PARSING WITH DOCKER
 
 NOTES
 ---
+- uses the [Dash framework](https://dash.plot.ly/)
 - pdf to text(`exp_text_parser.py`) is currently better than ocr, used as default by `main_parser.py`
 - Put all pdf files inside the `./parsing` directory to convert to csv. The csv files are output in `./data`
 
@@ -38,7 +37,12 @@ Running:
 
 Installing OCR deps, without Docker
 ---
-see that other repo..
+```
+source venv/bin/activate # Remember to activate your virtualenv
+pip install -r requirements.txt
+Install imagemagick and libimagemagickdev (differs by platform). Available via apt on Ubuntu
+Install tesseract (see above.)
+```
 
 Installing via Docker
 ---
