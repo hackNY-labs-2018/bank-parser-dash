@@ -37,6 +37,8 @@ Running:
 
 Installing OCR deps, without Docker
 ---
+
+Tips: use Python 3, make sure if you have 64-bit python, install 64-bit dependency versions. Similarly, 32-bit dep versions for 32-bit python.
 ```
 source venv/bin/activate # Remember to activate your virtualenv
 pip install -r requirements.txt
