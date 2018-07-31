@@ -1,14 +1,7 @@
 # Pabst
 Pabst is named after the legendary American beer 'Pabst Blue Ribbon', because PBR = Parsing Bank Records
 
-PARSING WITH DOCKER
--------------------
-- Assume that Docker is installed. 
-    - Run `./setup_pabst` to set up the docker container. Warning, this will take a while.
-    - Run `./pabst <FILENAME>` to run ocr parsing on a file. 
-
-
-NOTES
+Notes:
 ---
 - uses the [Dash framework](https://dash.plot.ly/)
 - pdf to text(`exp_text_parser.py`) is currently better than ocr, used as default by `main_parser.py`
@@ -49,4 +42,9 @@ Install tesseract (see above.)
 Installing via Docker
 ---
 
-Hi Kevin, pls do this section :)
+PARSING WITH DOCKER
+-------------------
+- Install Docker (and Virtualbox if applicable). May need to install Docker Legacy and Docker Toolbox for older machines.
+- Run `./setup_pabst` to set up the docker container. Warning, this will take a while.
+- Run `./pabst <FILENAME>` to run ocr parsing on a file. 
+
